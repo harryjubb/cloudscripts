@@ -6,4 +6,4 @@ export IFTTT_EMAILS="${IFTTT_EMAILS:=your_emails_to_alert}" # SPACE OR COMMA SEP
 DIGITALOCEAN_TOKEN="${DIGITALOCEAN_TOKEN:=your_token}"
 UUID="$(od -x /dev/urandom | head -1 | awk '{OFS="-"; print $2$3,$4,$5,$6,$7$8$9}')" # https://serverfault.com/a/799198/157989
 
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" -d '{"name":"mumble-lon1-$UUID","region":"lon1","size":"512mb","image":"ubuntu-16-04-x64","ssh_keys":null,"backups":false,"ipv6":false,"user_data":"#!/bin/bash ","private_networking":null,"volumes": null,"tags":["mumble"]}' "https://api.digitalocean.com/v2/droplets" 
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" -d '{"name":"mumble-lon1-$UUID","region":"lon1","size":"512mb","image":"ubuntu-16-04-x64","ssh_keys":null,"backups":false,"ipv6":false,"user_data":"'"$(curl https://raw.githubusercontent.com/harryjubb/cloudscripts/master/digitalocean/murmur/murmur_cloudinit.sh)"'","private_networking":null,"volumes": null,"tags":["mumble"]}' "https://api.digitalocean.com/v2/droplets"
