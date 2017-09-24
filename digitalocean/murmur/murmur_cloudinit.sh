@@ -37,6 +37,7 @@ ufw allow 64738 # MUMBLE/MURMUR
 ufw --force enable
 
 # ALERT SUCCESS BY EMAIL(S) VIA IFTTT
-PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
+PUBLIC_IPV4="$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)"
+DROPLET_ID="$(curl http://169.254.169.254/metadata/v1/id)"
 
-curl -X POST -H "Content-Type: application/json" -d "{\"value1\":\"$IFTTT_EMAILS\",\"value2\":\"IP: $PUBLIC_IPV4 | SuperUser pass: $SUPERUSER_PASSWORD | Server pass: $SERVER_PASSWORD \"}" https://maker.ifttt.com/trigger/$IFTTT_EVENT/with/key/$IFTTT_KEY
+curl -X POST -H "Content-Type: application/json" -d "{\"value1\":\"$IFTTT_EMAILS\",\"value2\":\"IP: $PUBLIC_IPV4 | SuperUser pass: $SUPERUSER_PASSWORD | Server pass: $SERVER_PASSWORD | Droplet ID: $DROPLET_ID (To delete see https://developers.digitalocean.com/documentation/v2/#delete-a-droplet) \"}" https://maker.ifttt.com/trigger/$IFTTT_EVENT/with/key/$IFTTT_KEY
