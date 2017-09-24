@@ -8,10 +8,10 @@ apt-get install -y pwgen
 # YOUR CONFIGURATION
 SUPERUSER_PASSWORD="$(pwgen)"
 SERVER_PASSWORD="$(pwgen)"
-MAX_USERS=10
-IFTTT_EVENT="murmur_setup"
-IFTTT_KEY="your_key"
-IFTTT_EMAILS="your_emails_to_alert" # SPACE OR COMMA SEPARATED
+MAX_USERS=${MAX_USERS:=10}
+IFTTT_EVENT="${IFTTT_EVENT:=murmur_setup}"
+IFTTT_KEY="${IFTTT_KEY:=your_ifttt_recipe_key}"
+IFTTT_EMAILS="${IFTTT_EMAILS:=your_emails_to_alert}" # SPACE OR COMMA SEPARATED
 
 # MUMBLE
 apt-get install -y mumble-server
