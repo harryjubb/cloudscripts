@@ -10,6 +10,9 @@ apt-get install -y pwgen
 SUPERUSER_PASSWORD="$(pwgen)"
 SERVER_PASSWORD="$(pwgen)"
 MAX_USERS=10
+IFTTT_EVENT="murmur_setup"
+IFTTT_KEY="your_key"
+IFTTT_EMAILS="emails_to_alert" # SPACE OR COMMA SEPARATED
 
 # MUMBLE
 apt-get install -y mumble-server
@@ -37,5 +40,4 @@ ufw --force enable
 # ALERT SUCCESS
 PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
 
-curl -X POST -H "Content-Type: application/json" -d "{\"value1\":\"your_email\",\"value2\":\"IP: $PUBLIC_IPV4 | SuperUser pass: $SUPERUSER_PASSWORD | Server pass: $SERVER_PASSWORD \"}" \
-https://maker.ifttt.com/trigger/your_trigger/with/key/your_key
+curl -X POST -H "Content-Type: application/json" -d "{\"value1\":\"$IFTTT_EMAILS\",\"value2\":\"IP: $PUBLIC_IPV4 | SuperUser pass: $SUPERUSER_PASSWORD | Server pass: $SERVER_PASSWORD \"}" https://maker.ifttt.com/trigger/$IFTTT_EVENT/with/key/$IFTTT_KEY
