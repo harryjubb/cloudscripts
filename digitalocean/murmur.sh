@@ -2,11 +2,10 @@
 
 # UPDATES
 apt-get update
-#apt-get -y upgrade
-
-# PASSWORDS
+#apt-get -y upgrade # THIS BREAKS AUTO SETUP. INTERACTIVE MENU ABOUT GRUB STOPS PROGRESSION?
 apt-get install -y pwgen
 
+# YOUR CONFIGURATION
 SUPERUSER_PASSWORD="$(pwgen)"
 SERVER_PASSWORD="$(pwgen)"
 MAX_USERS=10
@@ -18,7 +17,7 @@ IFTTT_EMAILS="your_emails_to_alert" # SPACE OR COMMA SEPARATED
 apt-get install -y mumble-server
 apt install debconf-utils
 
-# CONFIGURE SERVER
+# CONFIGURE SERVER: PRE-SEED CONFIG TO AVOID INTERACTIVE RECONFIGURATION
 echo "mumble-server   mumble-server/start_daemon      boolean true" | debconf-set-selections
 echo "mumble-server   mumble-server/use_capabilities  boolean true" | debconf-set-selections
 echo "mumble-server   mumble-server/password password $SUPERUSER_PASSWORD" | debconf-set-selections
@@ -37,7 +36,7 @@ ufw allow OpenSSH
 ufw allow 64738 # MUMBLE/MURMUR
 ufw --force enable
 
-# ALERT SUCCESS
+# ALERT SUCCESS BY EMAIL(S) VIA IFTTT
 PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
 
 curl -X POST -H "Content-Type: application/json" -d "{\"value1\":\"$IFTTT_EMAILS\",\"value2\":\"IP: $PUBLIC_IPV4 | SuperUser pass: $SUPERUSER_PASSWORD | Server pass: $SERVER_PASSWORD \"}" https://maker.ifttt.com/trigger/$IFTTT_EVENT/with/key/$IFTTT_KEY
