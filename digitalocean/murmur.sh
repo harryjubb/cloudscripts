@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # UPDATES
 apt-get update
@@ -12,7 +12,7 @@ SERVER_PASSWORD="$(pwgen)"
 MAX_USERS=10
 IFTTT_EVENT="murmur_setup"
 IFTTT_KEY="your_key"
-IFTTT_EMAILS="emails_to_alert" # SPACE OR COMMA SEPARATED
+IFTTT_EMAILS="your_emails_to_alert" # SPACE OR COMMA SEPARATED
 
 # MUMBLE
 apt-get install -y mumble-server
